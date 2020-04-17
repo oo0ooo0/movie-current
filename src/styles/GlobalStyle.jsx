@@ -33,22 +33,25 @@ a:hover {
 
 /* title reset  */
 h1 {
-  font: normal 900 48px/48px 'Lato';
+  text-align: center;
+  font: normal 900 48px/2 'Lato';
   color: #1d1e21;
 }
 
 h2 {
-  font: normal 900 32px/48px 'Lato';
+  text-align: center;
+  font: normal 900 32px/2 'Lato';
   color: #1d1e21;
 }
 
 h3 {
-  font: normal 500 14px/42px 'Lato';
+  text-align: center;
+  font: normal 500 20px/1.2 'Lato';
   color: #1d1e21;
 }
 
 h4 {
-  font: normal 900 24px/34px 'Lato';
+  font: normal 900 14px/1.2 'Lato';
   color: #1d1e21;
 }
 
