@@ -10,7 +10,9 @@ function App() {
       <GlobalStyle />
       <div className='App'>
         <header>
-          <h1>Now Playing</h1>
+          <h1>
+            <a href='http://localhost:3001/'>Now Playing!!</a>
+          </h1>
         </header>
         <MovieListProvider>
           <Route exact path='/'>
