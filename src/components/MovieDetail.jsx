@@ -8,7 +8,12 @@ export const BASE_URL = 'https://api.themoviedb.org/3';
 export const IMAGE_CDN_URL = 'https://image.tmdb.org/t/p/w440_and_h660_face/';
 
 const StyledMovieDetail = styled.div`
+  max-width: 1150px;
+  margin: 0px auto;
   .movie-title {
+    h3 {
+      font-size: 30px;
+    }
   }
   .image-wrap {
     display: flex;
@@ -24,23 +29,27 @@ const StyledMovieDetail = styled.div`
     text-align: center;
     margin-bottom: 20px;
   }
-  .review {
-    .review-title {
-      display: flex;
-      justify-content: space-between;
-    }
-    .review-content {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: normal;
-      line-height: 1.2;
-      height: 3.6em;
-      text-align: left;
-      word-wrap: break-word;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
+  .reviews {
+    .review {
+      padding: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid lightgray;
+
+      :first-child {
+        border-top: 1px solid lightgray;
+      }
+      .review-title {
+        .review-url {
+          a {
+            color: gray;
+          }
+        }
+      }
+      .review-content {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
 `;
@@ -114,18 +123,20 @@ export default function MovieDetail() {
         </p>
       </div>
 
-      <div className='review'>
+      <div className='reviews'>
         {reviews.map((review) => {
           return (
-            <React.Fragment key={review.id}>
-              <div className='review-title'>
-                <span className='review-author'>author: {review.author}</span>
-                <span className='review-url'>
-                  <a href={review.url}>Visit review page</a>
-                </span>
-              </div>
-              <li className='review-content'>내용: {review.content}</li>
-            </React.Fragment>
+            <div className='review'>
+              <React.Fragment key={review.id}>
+                <div className='review-title'>
+                  <span className='review-author'>author: {review.author} &emsp; </span>
+                  <span className='review-url'>
+                    <a href={review.url}> (Visit review page link)</a>
+                  </span>
+                </div>
+                <li className='review-content'>내용: {review.content}</li>
+              </React.Fragment>
+            </div>
           );
         })}
       </div>

@@ -12,7 +12,10 @@ const PAGE_PER_MOVIES = 20;
 
 const MovieContainer = styled.ul`
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
+  max-width: 1150px;
+  margin: 0px auto;
 `;
 
 const MovieItem = styled.li`
@@ -21,7 +24,7 @@ const MovieItem = styled.li`
   width: 33%;
   display: flex;
   flex-direction: column;
-  margin: 10px 5px;
+  margin: 10px 0;
 `;
 
 const LoadingState = styled.div`
@@ -37,6 +40,7 @@ const MovieTitle = styled.h3`
   overflow: hidden;
   white-space: nowrap;
   font-weight: bold;
+  padding: 0px 5px;
 `;
 
 function MovieList() {
