@@ -16,10 +16,12 @@ const MovieContainer = styled.ul`
 `;
 
 const MovieItem = styled.li`
+  background-color: #f2f2f2;
   flex: none;
   width: 33%;
   display: flex;
   flex-direction: column;
+  margin: 10px 5px;
 `;
 
 const LoadingState = styled.div`
@@ -93,8 +95,8 @@ function MovieList() {
         {movies.map((movie) => (
           <MovieItem key={movie.id}>
             <Link to={{ pathname: `/detail/${movie.id}`, state: { movie } }}>
-              <MovieTitle>{movie.title}</MovieTitle>
               <PosterLoader url={`${IMAGE_CDN_URL}/${movie.poster_path}`} />
+              <MovieTitle>{movie.title}</MovieTitle>
               <MovieSummary releaseDate={movie.release_date} avgScore={movie.vote_average} />
             </Link>
           </MovieItem>
