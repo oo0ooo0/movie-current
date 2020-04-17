@@ -6,7 +6,11 @@ function App() {
   return (
     <Router>
       <GlobalStyle />
-      <div className='App'>!!!</div>
+      <div className='App'>
+        <header>
+          <h1>Now Playing</h1>
+        </header>
+      </div>
     </Router>
   );
 }
