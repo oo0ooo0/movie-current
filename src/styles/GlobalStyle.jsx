@@ -12,7 +12,7 @@ h2,
 h3,
 h4,
 p,
-img,
+img{
   margin: 0;
   padding: 0;
 }
