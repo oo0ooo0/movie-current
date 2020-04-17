@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import MoveListContext from '../contexts/MoveListContext';
+import PosterLoader from './PosterLoader';
 
 export const BASE_URL = 'https://api.themoviedb.org/3';
 export const IMAGE_CDN_URL = 'https://image.tmdb.org/t/p/w440_and_h660_face/';
@@ -79,8 +80,6 @@ function MovieList() {
     return () => {};
   }, [currentPage, movies]);
   console.log(movies[0]);
-  console.log(IMAGE_CDN_URL);
-  // console.log(movies[0].poster_path);
 
   return (
     <>
@@ -88,7 +87,7 @@ function MovieList() {
         {movies.map((movie) => (
           <MovieItem key={movie.id}>
             <h3>{movie.title}</h3>
-            <img src={`${IMAGE_CDN_URL}` + movie.poster_path} />
+            <PosterLoader url={`${IMAGE_CDN_URL}/${movie.poster_path}`} />
             <span>{movie.release_date}</span>
             <span>{movie.vote_average}</span>
           </MovieItem>
