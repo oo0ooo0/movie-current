@@ -45,16 +45,12 @@ function MovieList() {
   const [isFetching, setFetching] = React.useState(false);
 
   const scrollController = (event) => {
-    // console.log(totalPage, currentPage);
     const element = event.target.body;
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    // console.log(scrollTop + window.innerHeight, element.scrollHeight);
     if (1 + scrollTop + window.innerHeight >= element.scrollHeight) {
-      // if (!isFetching) {
       if (!totalPage || totalPage > currentPage) {
-        setPage((value) => value + 1); //오류가 있어 로드되는 동안 로드가 되서
+        setPage((value) => value + 1);
       }
-      // }
     }
   };
   React.useEffect(() => {
