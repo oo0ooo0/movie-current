@@ -30,8 +30,11 @@ a {
 a:hover {
   color: #1d1e21;
 }
+/* font reset */
+body {
+  font: normal 400 12px/1.5 'Lato';
+}
 
-/* title reset  */
 h1 {
   text-align: center;
   font: normal 900 48px/2 'Lato';
@@ -46,7 +49,7 @@ h2 {
 
 h3 {
   text-align: center;
-  font: normal 500 20px/1.2 'Lato';
+  font: normal 900 20px/1.2 'Lato';
   color: #1d1e21;
 }
 
@@ -60,10 +63,14 @@ p {
   color: #1d1e21;
 }
 
-/* font reset */
-body {
-  font: normal 400 12px/1.5 'Lato';
-}
+small{  
+  display:block;
+  text-align: center;
+  font: normal 500 20px/1.2 'Lato';
+  color:#666;}
+
+
+
 
 /* font style reset */
 address {
@@ -86,6 +93,11 @@ fieldset {
 }
 
 
+/* header  */
+header{
+border-bottom: 1px solid lightgray;
+margin-bottom: 50px;
+}
 `;
 
 export default GlobalStyle;
