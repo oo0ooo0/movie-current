@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import MoveListContext from '../contexts/MoveListContext';
 import PosterLoader from './PosterLoader';
 import MovieSummary from './MovieSummary';
+import { Link } from 'react-router-dom';
 
 export const BASE_URL = 'https://api.themoviedb.org/3';
 export const IMAGE_CDN_URL = 'https://image.tmdb.org/t/p/w440_and_h660_face/';
@@ -35,6 +36,7 @@ const MovieTitle = styled.h3`
   white-space: nowrap;
   font-weight: bold;
 `;
+
 function MovieList() {
   const { totalPage, setTotalPage, setMovies, movies, currentPage, setPage } = React.useContext(
     MoveListContext
@@ -100,6 +102,7 @@ function MovieList() {
           </MovieItem>
         ))}
       </MovieContainer>
+      {isFetching && <LoadingState />}
     </>
   );
 }
