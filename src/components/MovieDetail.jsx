@@ -28,6 +28,27 @@ export default function MovieDetail() {
       },
     },
   } = location;
+  // console.log(movie);
+
+  useEffect(() => {
+    async function callReviews() {
+      if (!isFetching) {
+        setFetching(true);
+        try {
+          const { data } = await axios.get(
+            `/movie/${id}/reviews?api_key=40bf80f6870c3b230323ccf339f432f4&page=1`,
+            {
+              baseURL: BASE_URL,
+            }
+          );
+          setReviews(data.results);
+        } finally {
+          setFetching(false);
+        }
+      }
+    }
+    callReviews();
+  }, []);
 
   return (
     <div>
@@ -40,6 +61,18 @@ export default function MovieDetail() {
       <p>{adult ? '청소년 관람 불가' : '청소년 관람 가능'}</p>
       <p>출시 날짜: {release_date}</p>
       <p>줄거리: {overview}</p>
+
+      <ul>
+        {reviews.map((review) => {
+          return (
+            <React.Fragment key={review.id}>
+              <li>작성자: {review.author}</li>
+              <li>내용: {review.content}</li>
+              <li>리뷰 페이지 가기:{review.url}</li>
+            </React.Fragment>
+          );
+        })}
+      </ul>
     </div>
   );
 }
