@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MovieListContext = React.createContext({ movies: [], selectedMovie: null });
+const MovieListContext = React.createContext({ movies: [] });
 export default MovieListContext;
 
 export function MovieListProvider(props) {
@@ -13,7 +13,6 @@ export function MovieListProvider(props) {
         movies,
         currentPage,
         setPage,
-        selectedMovie: null,
         setMovies,
         totalPage,
         setTotalPage,
