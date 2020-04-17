@@ -2,10 +2,48 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import PosterLoader from './PosterLoader';
+import styled from 'styled-components';
 
 export const BASE_URL = 'https://api.themoviedb.org/3';
 export const IMAGE_CDN_URL = 'https://image.tmdb.org/t/p/w440_and_h660_face/';
 
+const StyledMovieDetail = styled.div`
+  .movie-title {
+  }
+  .image-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px;
+
+    img {
+      width: 60%;
+      max-width: 381.82px;
+    }
+  }
+  .info-wrap > p {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .review {
+    .review-title {
+      display: flex;
+      justify-content: space-between;
+    }
+    .review-content {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+      line-height: 1.2;
+      height: 3.6em;
+      text-align: left;
+      word-wrap: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+  }
+`;
 export default function MovieDetail() {
   const location = useLocation();
   const [isFetching, setFetching] = React.useState(false);
@@ -13,14 +51,9 @@ export default function MovieDetail() {
   const {
     state: {
       movie: {
-        popularity,
-        vote_count,
-        video,
         poster_path,
         id,
         adult,
-        backdrop_path,
-        original_language,
         original_title,
 
         title,
@@ -53,29 +86,49 @@ export default function MovieDetail() {
   }, []);
 
   return (
-    <div>
-      <div className='movieTitle'>
-        <span className='title'>{title}</span>
-        <span>{original_title}</span>
+    <StyledMovieDetail>
+      <div className='movie-title'>
+        <h3 className='title'>{title}</h3>
+        <small>( original title : {original_title} )</small>
       </div>
-      <PosterLoader url={`${IMAGE_CDN_URL}/${poster_path}`} />
+      <div className='image-wrap'>
+        <PosterLoader url={`${IMAGE_CDN_URL}/${poster_path}`} />
+      </div>
 
-      <p>평점: {vote_average}</p>
-      <p>{adult ? '청소년 관람 불가' : '청소년 관람 가능'}</p>
-      <p>출시 날짜: {release_date}</p>
-      <p>줄거리: {overview}</p>
+      <div className='info-wrap'>
+        <p>
+          <b>vote_average:</b>
+          <br />
+          {vote_average}
+        </p>
+        <p>{adult ? 'NC-17' : ''}</p>
+        <p>
+          <b>Release date:</b>
+          <br />
+          {release_date}
+        </p>
+        <p>
+          <b>overview:</b>
+          <br />
+          {overview}
+        </p>
+      </div>
 
-      <ul>
+      <div className='review'>
         {reviews.map((review) => {
           return (
             <React.Fragment key={review.id}>
-              <li>작성자: {review.author}</li>
-              <li>내용: {review.content}</li>
-              <li>리뷰 페이지 가기:{review.url}</li>
+              <div className='review-title'>
+                <span className='review-author'>author: {review.author}</span>
+                <span className='review-url'>
+                  <a href={review.url}>Visit review page</a>
+                </span>
+              </div>
+              <li className='review-content'>내용: {review.content}</li>
             </React.Fragment>
           );
         })}
-      </ul>
-    </div>
+      </div>
+    </StyledMovieDetail>
   );
 }
