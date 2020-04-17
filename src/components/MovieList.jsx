@@ -7,9 +7,24 @@ export const BASE_URL = 'https://api.themoviedb.org/3';
 export const IMAGE_CDN_URL = 'https://image.tmdb.org/t/p/w440_and_h660_face/';
 const PAGE_PER_MOVIES = 20;
 
-const MovieContainer = styled.ul``;
+const MovieContainer = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+`;
 
-const MovieItem = styled.li``;
+const MovieItem = styled.li`
+  flex: none;
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  img {
+    width: 100%;
+    max-height: 572px;
+    min-height: 200px;
+  }
+`;
+
+const LoadingState = styled.div``;
 
 function MovieList() {
   const { totalPage, setTotalPage, setMovies, movies, currentPage, setPage } = React.useContext(
@@ -57,20 +72,29 @@ function MovieList() {
         }
       }
     }
-    console.log(movies);
     if (Math.floor(movies.length / PAGE_PER_MOVIES) !== currentPage) {
       callMovies();
     }
 
     return () => {};
   }, [currentPage, movies]);
+  console.log(movies[0]);
+  console.log(IMAGE_CDN_URL);
+  // console.log(movies[0].poster_path);
 
   return (
-    <MovieContainer>
-      <h2>MovieList</h2>
-      <MovieItem>MovieItem</MovieItem>
-    </MovieContainer>
+    <>
+      <MovieContainer>
+        {movies.map((movie) => (
+          <MovieItem key={movie.id}>
+            <h3>{movie.title}</h3>
+            <img src={`${IMAGE_CDN_URL}` + movie.poster_path} />
+            <span>{movie.release_date}</span>
+            <span>{movie.vote_average}</span>
+          </MovieItem>
+        ))}
+      </MovieContainer>
+    </>
   );
 }
-
 export default MovieList;
