@@ -28,6 +28,10 @@ function PosterLoader(props) {
   return (
     <>
       <StyledImage src={url} alt={'포스터'} ref={ref} isLoaded={isLoaded} />
+      {/* {
+      url ?       <StyledImage src={url} alt={'포스터'} ref={ref} isLoaded={isLoaded} />
+ : <p>이미지가 존재하지 안ㅎ아</p>;
+    } */}
     </>
   );
 }
