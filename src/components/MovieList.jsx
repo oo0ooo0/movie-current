@@ -92,9 +92,11 @@ function MovieList() {
       <MovieContainer>
         {movies.map((movie) => (
           <MovieItem key={movie.id}>
-            <MovieTitle>{movie.title}</MovieTitle>
-            <PosterLoader url={`${IMAGE_CDN_URL}/${movie.poster_path}`} />
-            <MovieSummary releaseDate={movie.release_date} avgScore={movie.vote_average} />
+            <Link to={{ pathname: `/detail/${movie.id}`, state: { movie } }}>
+              <MovieTitle>{movie.title}</MovieTitle>
+              <PosterLoader url={`${IMAGE_CDN_URL}/${movie.poster_path}`} />
+              <MovieSummary releaseDate={movie.release_date} avgScore={movie.vote_average} />
+            </Link>
           </MovieItem>
         ))}
       </MovieContainer>
