@@ -96,7 +96,7 @@ function MovieList() {
       <MovieContainer>
         {movies.map((movie) => (
           <MovieItem key={movie.id}>
-            <h3>{movie.title}</h3>
+            <MovieTitle>{movie.title}</MovieTitle>
             <PosterLoader url={`${IMAGE_CDN_URL}/${movie.poster_path}`} />
             <MovieSummary releaseDate={movie.release_date} avgScore={movie.vote_average} />
           </MovieItem>
