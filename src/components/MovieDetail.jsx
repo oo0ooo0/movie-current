@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import PosterLoader from './PosterLoader';
 
 export const BASE_URL = 'https://api.themoviedb.org/3';
+export const IMAGE_CDN_URL = 'https://image.tmdb.org/t/p/w440_and_h660_face/';
 
 export default function MovieDetail() {
   const location = useLocation();
@@ -56,6 +58,7 @@ export default function MovieDetail() {
         <span className='title'>{title}</span>
         <span>{original_title}</span>
       </div>
+      <PosterLoader url={`${IMAGE_CDN_URL}/${poster_path}`} />
 
       <p>평점: {vote_average}</p>
       <p>{adult ? '청소년 관람 불가' : '청소년 관람 가능'}</p>
