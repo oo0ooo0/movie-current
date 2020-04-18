@@ -82,7 +82,7 @@ export default function MovieDetail() {
         setFetching(true);
         try {
           const { data } = await axios.get(
-            `/movie/${id}/reviews?api_key=40bf80f6870c3b230323ccf339f432f4&page=1`,
+            `/movie/${id}/reviews?api_key=${process.env.API_KEY}&page=1`,
             {
               baseURL: BASE_URL,
               cancelToken: source.token,

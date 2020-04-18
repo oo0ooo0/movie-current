@@ -75,7 +75,7 @@ function MovieList() {
         setFetching(true);
         try {
           const { data } = await axios.get(
-            `/movie/now_playing?api_key=40bf80f6870c3b230323ccf339f432f4&page=${currentPage}`,
+            `/movie/now_playing?api_key=${process.env.API_KEY}&page=${currentPage}`,
             {
               baseURL: BASE_URL,
               // cancelToken: axios.CancelToken,
