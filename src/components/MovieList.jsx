@@ -70,7 +70,6 @@ function MovieList() {
   }, [totalPage, currentPage, scrollController]);
 
   React.useEffect(() => {
-    console.log('process.env', process.env);
     async function callMovies() {
       if (!isFetching) {
         setFetching(true);
