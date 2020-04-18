@@ -64,7 +64,6 @@ export default function MovieDetail() {
         id,
         adult,
         original_title,
-
         title,
         vote_average,
         overview,
@@ -75,6 +74,9 @@ export default function MovieDetail() {
   // console.log(movie);
 
   useEffect(() => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
     async function callReviews() {
       if (!isFetching) {
         setFetching(true);
@@ -83,16 +85,22 @@ export default function MovieDetail() {
             `/movie/${id}/reviews?api_key=40bf80f6870c3b230323ccf339f432f4&page=1`,
             {
               baseURL: BASE_URL,
+              cancelToken: source.token,
             }
           );
           setReviews(data.results);
+        } catch (error) {
+          console.log(error);
         } finally {
           setFetching(false);
         }
       }
     }
     callReviews();
-  }, []);
+    return () => {
+      source.cancel();
+    };
+  }, [id]);
 
   return (
     <StyledMovieDetail>
@@ -101,7 +109,7 @@ export default function MovieDetail() {
         <small>( original title : {original_title} )</small>
       </div>
       <div className='image-wrap'>
-        <PosterLoader url={`${IMAGE_CDN_URL}/${poster_path}`} />
+        <PosterLoader url={poster_path} />
       </div>
 
       <div className='info-wrap'>
@@ -124,21 +132,17 @@ export default function MovieDetail() {
       </div>
 
       <div className='reviews'>
-        {reviews.map((review) => {
-          return (
-            <div className='review'>
-              <React.Fragment key={review.id}>
-                <div className='review-title'>
-                  <span className='review-author'>author: {review.author} &emsp; </span>
-                  <span className='review-url'>
-                    <a href={review.url}> (Visit review page link)</a>
-                  </span>
-                </div>
-                <li className='review-content'>내용: {review.content}</li>
-              </React.Fragment>
+        {reviews.map((review) => (
+          <div className='review' key={review.id}>
+            <div className='review-title'>
+              <span className='review-author'>author: {review.author} &emsp; </span>
+              <span className='review-url'>
+                <a href={review.url}> (Visit review page link)</a>
+              </span>
             </div>
-          );
-        })}
+            <li className='review-content'>내용: {review.content}</li>
+          </div>
+        ))}
       </div>
     </StyledMovieDetail>
   );
