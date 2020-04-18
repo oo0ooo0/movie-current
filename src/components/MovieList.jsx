@@ -50,21 +50,24 @@ function MovieList() {
 
   const [isFetching, setFetching] = React.useState(false);
 
-  const scrollController = (event) => {
-    const element = event.target.body;
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    if (1 + scrollTop + window.innerHeight >= element.scrollHeight) {
-      if (!totalPage || totalPage > currentPage) {
-        setPage((value) => value + 1);
+  const scrollController = React.useCallback(
+    (event) => {
+      const element = event.target.body;
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      if (1 + scrollTop + window.innerHeight >= element.scrollHeight) {
+        if (!totalPage || totalPage > currentPage) {
+          setPage((value) => value + 1);
+        }
       }
-    }
-  };
+    },
+    [currentPage, setPage, totalPage]
+  );
   React.useEffect(() => {
     window.addEventListener('scroll', scrollController);
     return () => {
       window.removeEventListener('scroll', scrollController);
     };
-  }, [totalPage, currentPage]);
+  }, [totalPage, currentPage, scrollController]);
 
   React.useEffect(() => {
     async function callMovies() {
@@ -75,6 +78,7 @@ function MovieList() {
             `/movie/now_playing?api_key=40bf80f6870c3b230323ccf339f432f4&page=${currentPage}`,
             {
               baseURL: BASE_URL,
+              // cancelToken: axios.CancelToken,
             }
           );
           setMovies([...movies, ...data.results]);
@@ -90,21 +94,24 @@ function MovieList() {
     }
 
     return () => {};
-  }, [currentPage, movies]);
-  console.log(movies[0]);
+  }, [currentPage, movies, totalPage, setMovies, setTotalPage, isFetching, setPage]);
 
   return (
     <>
       <MovieContainer>
-        {movies.map((movie) => (
-          <MovieItem key={movie.id}>
-            <Link to={{ pathname: `/detail/${movie.id}`, state: { movie } }}>
-              <PosterLoader url={`${IMAGE_CDN_URL}/${movie.poster_path}`} />
-              <MovieTitle>{movie.title}</MovieTitle>
-              <MovieSummary releaseDate={movie.release_date} avgScore={movie.vote_average} />
-            </Link>
-          </MovieItem>
-        ))}
+        {movies.map(
+          (movie) =>
+            // 포스터가 없는 영화는 영화가 아님
+            movie.poster_path && (
+              <MovieItem key={movie.id}>
+                <Link to={{ pathname: `/detail/${movie.id}`, state: { movie } }}>
+                  <PosterLoader url={movie.poster_path} />
+                  <MovieTitle>{movie.title}</MovieTitle>
+                  <MovieSummary releaseDate={movie.release_date} avgScore={movie.vote_average} />
+                </Link>
+              </MovieItem>
+            )
+        )}
       </MovieContainer>
       {isFetching && <LoadingState />}
     </>

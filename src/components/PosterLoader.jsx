@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 const StyledImage = styled.img`
-  background: ${(props) => (props.isLoaded ? 'none' : '#D1D3D5')};
+  background: ${(props) => (props.isLoaded ? '#D1D3D5' : '#D1D3D5')};
   width: 100%;
-
   max-height: 572px;
-  min-height: 200px;
+  min-height: 100%;
   ${(props) => (props.isLoaded ? 'padding-top: 66.7%' : 'padding-top: 0;')};
 `;
+const IMAGE_CDN_URL = 'https://image.tmdb.org/t/p/w440_and_h660_face/';
 
 function PosterLoader(props) {
   const { url } = props;
@@ -17,7 +17,7 @@ function PosterLoader(props) {
   const ref = React.useRef(null);
   useEffect(() => {
     if (ref.current) {
-      ref.current.src = url;
+      ref.current.src = `${IMAGE_CDN_URL}${url}`;
       setLoaded(false);
       ref.current.onLoad = () => {
         setLoaded(true);
@@ -25,15 +25,7 @@ function PosterLoader(props) {
     }
   }, [url, ref]);
 
-  return (
-    <>
-      <StyledImage src={url} alt={'포스터'} ref={ref} isLoaded={isLoaded} />
-      {/* {
-      url ?       <StyledImage src={url} alt={'포스터'} ref={ref} isLoaded={isLoaded} />
- : <p>이미지가 존재하지 안ㅎ아</p>;
-    } */}
-    </>
-  );
+  return <StyledImage alt={'포스터'} ref={ref} isLoaded={isLoaded} />;
 }
 
 export default PosterLoader;
